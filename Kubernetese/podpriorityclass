@@ -1,0 +1,26 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: first-priority2
+value: 1000000
+preemptionPolicy: PreemptLowerPriority
+globalDefault: false
+description: "critical apps."
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: priorityppod1
+spec:
+  containers:
+  - name: elcdemo2
+    image: nginx:latest
+    imagePullPolicy: IfNotPresent
+    resources:
+      requests:
+        memory: "3000Mi"
+        cpu: "1500m"
+      limits:
+        memory: "4000Mi"
+        cpu: "1500m"
+  priorityClassName: first-priority2
